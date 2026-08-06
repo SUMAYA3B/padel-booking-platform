@@ -1,0 +1,262 @@
+/* ============================================
+   PADEL PRO - Custom Theme (Pure CSS)
+   Color Palette: Green / Black / White
+   ============================================ */
+
+:root {
+  --padel-green: #00a859;
+  --padel-green-dark: #006838;
+  --padel-lime: #8bc34a;
+  --padel-dark: #111517;
+  --padel-darker: #0a0c0e;
+  --padel-light: #f5f7f6;
+}
+
+/* التمرير السلس (Smooth Scroll) عند التنقل بين أقسام الصفحة الرئيسية */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', 'Tahoma', system-ui, -apple-system, sans-serif;
+  background-color: #fafbfc;
+  color: #222;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ============ Text & BG helpers ============ */
+.text-padel-green { color: var(--padel-green); }
+.bg-padel-green { background-color: var(--padel-green); }
+.bg-padel-dark { background-color: var(--padel-darker); }
+.text-padel-lime { color: var(--padel-lime); }
+
+/* ============ Buttons ============ */
+.btn-padel {
+  background-color: var(--padel-green);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.6rem 1.6rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+.btn-padel:hover {
+  background-color: var(--padel-green-dark);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 168, 89, 0.3);
+}
+
+.btn-outline-padel {
+  background: transparent;
+  color: var(--padel-green);
+  border: 2px solid var(--padel-green);
+  border-radius: 50px;
+  padding: 0.5rem 1.4rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+.btn-outline-padel:hover {
+  background-color: var(--padel-green);
+  color: #fff;
+}
+
+/* ============ Cards ============ */
+.padel-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.padel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ============ Navbar ============ */
+.padel-navbar {
+  background-color: rgba(17, 21, 23, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 0.8rem 0;
+}
+.padel-navbar .navbar-brand span {
+  color: var(--padel-green);
+  font-weight: 800;
+}
+.padel-navbar .navbar-brand small {
+  color: #ccc;
+  letter-spacing: 1px;
+}
+
+/* ============ Hero ============ */
+.hero-section {
+  background: linear-gradient(135deg, var(--padel-darker) 0%, var(--padel-dark) 60%, var(--padel-green-dark) 100%);
+  color: #fff;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-badge {
+  background: rgba(0, 168, 89, 0.2);
+  border: 1px solid rgba(0, 168, 89, 0.4);
+  color: var(--padel-lime);
+  border-radius: 50px;
+  padding: 0.35rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ============ Stats ============ */
+.stat-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.4rem;
+  text-align: center;
+  border: 1px solid #e9ecef;
+}
+.stat-card .stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ============ Sidebar ============ */
+.sidebar {
+  background-color: var(--padel-darker);
+  color: #fff;
+  min-height: 100vh;
+}
+.sidebar-link {
+  color: #b8c0c0;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+}
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+.sidebar-link.active {
+  background-color: var(--padel-green);
+  color: #fff;
+}
+
+/* ============ Tables ============ */
+.padel-table thead th {
+  background-color: var(--padel-darker);
+  color: #fff;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+/* ============ Chips ============ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 50px;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.chip-success { background: rgba(0, 168, 89, 0.15); color: var(--padel-green); }
+.chip-warning { background: rgba(255, 193, 7, 0.18); color: #b8860b; }
+.chip-danger { background: rgba(220, 53, 69, 0.12); color: #dc3545; }
+.chip-info { background: rgba(13, 202, 240, 0.14); color: #0d6efd; }
+.chip-secondary { background: rgba(108, 117, 125, 0.14); color: #6c757d; }
+
+/* ============ Time slot buttons ============ */
+.slot-btn {
+  border: 2px solid #e0e3e2;
+  border-radius: 10px;
+  padding: 0.55rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: #fff;
+}
+.slot-btn:hover { border-color: var(--padel-green); color: var(--padel-green); }
+.slot-available { color: var(--padel-green); }
+.slot-available:hover { background: var(--padel-green); color: #fff; }
+.slot-selected { background: var(--padel-green); color: #fff; border-color: var(--padel-green); }
+.slot-disabled { background: #f1f2f2; color: #b0b5b4; cursor: not-allowed; border-color: #e9ecef; }
+
+/* ============ Monthly calendar day buttons ============ */
+.calendar-day {
+  border: 1px solid #e0e3e2;
+  border-radius: 10px;
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.calendar-day:hover:not(:disabled) {
+  border-color: var(--padel-green);
+  color: var(--padel-green);
+  background: rgba(0, 168, 89, 0.06);
+}
+.calendar-selected {
+  background: var(--padel-green);
+  color: #fff;
+  border-color: var(--padel-green);
+}
+.calendar-selected:hover:not(:disabled) {
+  background: var(--padel-green-dark);
+  color: #fff;
+}
+.calendar-closed {
+  background: rgba(220, 53, 69, 0.08);
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.3);
+  text-decoration: line-through;
+}
+.calendar-disabled {
+  background: #f1f2f2;
+  color: #b0b5b4;
+  cursor: not-allowed;
+  border-color: #e9ecef;
+}
+
+/* ============ Auth ============ */
+.auth-bg {
+  background: linear-gradient(135deg, var(--padel-darker) 0%, var(--padel-dark) 50%, var(--padel-green-dark) 100%);
+  min-height: 100vh;
+}
+.auth-card {
+  max-width: 420px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* ============ Footer ============ */
+.footer {
+  background-color: var(--padel-darker);
+  color: #a0a8a8;
+}

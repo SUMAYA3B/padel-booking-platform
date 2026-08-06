@@ -1,0 +1,825 @@
+{
+	"info": {
+		"_postman_id": "padel-pro-api-collection",
+		"name": "Padel Pro API",
+		"description": "منصة حجوزات ملاعب البادل - جميع نقاط الـ API مرتبة ومنظمة",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🔐 المصادقة (Auth)",
+			"item": [
+				{
+					"name": "تسجيل دخول المسؤول",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@padelpro.om\",\n  \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "auth", "login"]
+						},
+						"description": "يسجل الدخول كمسؤول ويعيد لك Token. انسخ الـ token وضعه في أي طلب إداري."
+					},
+					"response": []
+				},
+				{
+					"name": "تسجيل مستخدم جديد",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"أحمد محمد\",\n  \"email\": \"ahmed@test.com\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "auth", "register"]
+						},
+						"description": "إنشاء حساب عميل جديد (العملاء الذين يحجزون)."
+					},
+					"response": []
+				},
+				{
+					"name": "تسجيل دخول عميل",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"ahmed@test.com\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "auth", "login"]
+						},
+						"description": "تسجيل دخول عميل عادي (غير المسؤول)."
+					},
+					"response": []
+				},
+				{
+					"name": "تسجيل الخروج",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/logout",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "auth", "logout"]
+						},
+						"description": "إلغاء الجلسة الحالية (إبطال الـ token)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🗓️ توفر الملاعب",
+			"item": [
+				{
+					"name": "الاستعلام عن الأوقات المتاحة",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/availability?date=2026-08-03&hours=1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "availability"],
+							"query": [
+								{
+									"key": "date",
+									"value": "2026-08-03",
+									"description": "التاريخ المطلوب بصيغة Y-m-d"
+								},
+								{
+									"key": "hours",
+									"value": "1",
+									"description": "عدد الساعات المطلوبة (اختياري، افتراضي 1)"
+								}
+							]
+						},
+						"description": "يعرض الأوقات المتاحة والمتاحة عدد الملاعب المتاحة في كل فترة."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🌐 محتوى الصفحة الرئيسية (عامة - بدون تسجيل)",
+			"item": [
+				{
+					"name": "الملاعب النشطة (العامة)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courts",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "courts"]
+						},
+						"description": "الملاعب النشطة المعروضة في الصفحة الرئيسية (بدون تسجيل دخول)."
+					},
+					"response": []
+				},
+				{
+					"name": "العروض النشطة (العامة)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/offers",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "offers"]
+						},
+						"description": "العروض النشطة والسارية المعروضة في الصفحة الرئيسية (بدون تسجيل دخول)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📝 الحجوزات (عملاء)",
+			"item": [
+				{
+					"name": "إنشاء حجز (دفع نقدي)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer_name\": \"أحمد محمد\",\n  \"customer_phone\": \"0551112222\",\n  \"customer_email\": \"ahmed@test.com\",\n  \"booking_date\": \"2026-08-03\",\n  \"start_time\": \"10:00\",\n  \"end_time\": \"11:00\",\n  \"payment_method\": \"cash\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "bookings"]
+						},
+						"description": "إنشاء حجز جديد. طريقة الدفع:\n- cash = دفع نقدي (تأكيد فوري)\n- thawani = دفع الكتروني"
+					},
+					"response": []
+				},
+				{
+					"name": "عرض تفاصيل حجز",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/bookings/BK-20260803-XXXXXX",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "bookings", "BK-20260803-XXXXXX"],
+							"description": "استبدل BK-20260803-XXXXXX برقم الحجز الحقيقي"
+						},
+						"description": "يعرض تفاصيل حجز برقم الحجز."
+					},
+					"response": []
+				},
+				{
+					"name": "إلغاء حجز",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"تغيير في الخطط\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/bookings/BK-20260803-XXXXXX/cancel",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "bookings", "BK-20260803-XXXXXX", "cancel"],
+							"description": "استبدل BK-20260803-XXXXXX برقم الحجز"
+						},
+						"description": "إلغاء حجز (اختياري أرسل السبب في Body)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🔧 لوحة الإدارة (Admin)",
+			"item": [
+				{
+					"name": "لوحة التحكم (الاحصائيات)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/dashboard",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "dashboard"]
+						},
+						"description": "إحصائيات الادارة: عدد الحجوزات، الإيرادات، حجوزات الأسبوع، إلخ. يُطلب Token."
+					},
+					"response": []
+				},
+				{
+					"name": "الملاعب (Courts) - قائمة",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/courts",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "courts"]
+						},
+						"description": "يعرض قائمة الملاعب. يحتاج Token."
+					},
+					"response": []
+				},
+				{
+					"name": "الملاعب - إضافة ملعب",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"ملعب 5\",\n  \"description\": \"ملعب جديد\",\n  \"price_per_hour\": 13.50,\n  \"is_covered\": true,\n  \"is_active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/courts",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "courts"]
+						},
+						"description": "إضافة ملعب جديد. يحتاج Token."
+					},
+					"response": []
+				},
+				{
+					"name": "الملاعب - تعديل ملعب",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"ملعب 1 المحدّث\",\n  \"price_per_hour\": 11.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/courts/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "courts", "1"],
+							"description": "استبدل 1 بمعرف الملعب"
+						},
+						"description": "تعديل بيانات ملعب (PUT أو PATCH)."
+					},
+					"response": []
+				},
+				{
+					"name": "الملاعب - حذف ملعب",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/courts/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "courts", "1"],
+							"description": "استبدل 1 بمعرف الملعب"
+						},
+						"description": "حذف ملعب."
+					},
+					"response": []
+				},
+				{
+					"name": "الحجوزات - قائمة (ادارة)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/bookings?status=confirmed",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "bookings"],
+							"query": [
+								{
+									"key": "status",
+									"value": "confirmed",
+									"description": "اختياري: pending, confirmed, completed, cancelled"
+								}
+							]
+						},
+						"description": "قائمة حجوزات الادارة مع فلاتر (حسب الحالة، التاريخ، البحث)."
+					},
+					"response": []
+				},
+				{
+					"name": "الحجوزات - تغيير حالة حجز",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\",\n  \"cancellation_reason\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/bookings/1/status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "bookings", "1", "status"],
+							"description": "استبدل 1 بمعرف الحجز"
+						},
+						"description": "تغيير حالة الحجز: pending, confirmed, completed, cancelled."
+					},
+					"response": []
+				},
+				{
+					"name": "العروض (Offers) - قائمة",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/offers",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "offers"]
+						},
+						"description": "قائمة العروض."
+					},
+					"response": []
+				},
+				{
+					"name": "العروض - إضافة عرض",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"عرض ساعتين\",\n  \"min_hours\": 2,\n  \"max_hours\": 2,\n  \"price_per_hour\": 8.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/offers",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "offers"]
+						},
+						"description": "إضافة عرض تسعير."
+					},
+					"response": []
+				},
+				{
+					"name": "ساعات العمل - إضافة",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"court_id\": 1,\n  \"day_of_week\": 0,\n  \"open_time\": \"06:00\",\n  \"close_time\": \"23:00\",\n  \"is_active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/working-hours",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "working-hours"]
+						},
+						"description": "إضافة ساعات عمل لملعب. day_of_week من 0 (الأحد) إلى 6 (السبت)."
+					},
+					"response": []
+				},
+				{
+					"name": "أيام الإغلاق - إضافة",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"2026-08-10\",\n  \"reason\": \"صيانة\",\n  \"court_id\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/admin/closed-dates",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "admin", "closed-dates"]
+						},
+						"description": "إضافة يوم إغلاق. court_id = null (جميع الملاعب)، أو محدد لملعب معين."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
