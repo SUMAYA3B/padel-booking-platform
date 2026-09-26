@@ -78,3 +78,57 @@ Desktop.ini
 # -------------------------------------------------------------------------
 *.log
 
+
+# -------------------------------------------------------------------------
+#  Extra safety rules (added during repository cleanup)
+#  Purpose: never re-upload secrets, dependencies, logs, cache or DB dumps.
+# -------------------------------------------------------------------------
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+auth.json
+
+# Dependencies (reinstalled via composer / npm)
+/vendor/
+vendor/
+node_modules/
+**/node_modules/
+
+# Logs & cache
+*.log
+logs/
+**/logs/
+cache/
+**/cache/
+.bootstrap/cache/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+storage/logs/
+storage/pail
+
+# Build output
+/frontend/dist/
+dist/
+/public/build/
+
+# Database dumps / dumps that may contain real data or tokens
+*.sql
+*.sqlite
+*.sqlite3
+*.dump
+dump.sql
+
+# Local / IDE / OS
+.phpunit.result.cache
+.phpunit.cache
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
